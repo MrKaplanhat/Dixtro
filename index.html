@@ -12,6 +12,7 @@
   :root{
     --paper:#F1EEE6;
     --paper-2:#E7E2D6;
+    --paper-rgb:241,238,230;
     --ink:#15130F;
     --ink-soft:#3A362C;
     --signal:#3341E8;
@@ -19,11 +20,26 @@
     --muted:#79735F;
     --line:rgba(21,19,15,0.14);
     --line-strong:rgba(21,19,15,0.28);
+    --deep:#15130F;
+    --deep-text:#F1EEE6;
     --serif:'Space Grotesk',sans-serif;
     --body:'Inter',sans-serif;
     --mono:'IBM Plex Mono',monospace;
     --maxw:1280px;
   }
+  html[data-theme="dark"]{
+    --paper:#131015;
+    --paper-2:#1C1820;
+    --paper-rgb:19,16,21;
+    --ink:#F1EEE6;
+    --ink-soft:#CDC7B9;
+    --signal:#6E78FF;
+    --signal-soft:rgba(110,120,255,0.16);
+    --muted:#8D8879;
+    --line:rgba(241,238,230,0.12);
+    --line-strong:rgba(241,238,230,0.24);
+  }
+  body{transition:background .3s ease, color .3s ease;}
   *{box-sizing:border-box; margin:0; padding:0;}
   html{scroll-behavior:smooth;}
   body{
@@ -63,7 +79,7 @@
     position:fixed; top:0; left:0; right:0; z-index:900;
     display:flex; align-items:center; justify-content:space-between;
     padding:22px 40px; mix-blend-mode:normal;
-    background:linear-gradient(to bottom, rgba(241,238,230,.92), rgba(241,238,230,0));
+    background:linear-gradient(to bottom, rgba(var(--paper-rgb),.92), rgba(var(--paper-rgb),0));
     backdrop-filter:blur(2px);
   }
   .logo{font-family:var(--serif); font-weight:700; font-size:20px; letter-spacing:-0.02em;}
@@ -75,6 +91,7 @@
   nav.links a.active{color:var(--ink);}
   .navcta{font-family:var(--mono); font-size:12px; text-transform:uppercase; letter-spacing:.06em; border:1px solid var(--ink); padding:9px 18px; border-radius:100px; transition:background .25s ease, color .25s ease;}
   .navcta:hover{background:var(--ink); color:var(--paper);}
+  #themeToggle{font-family:var(--mono); font-size:11px; text-transform:uppercase; letter-spacing:.02em; border:1px solid var(--line-strong); border-radius:100px; padding:8px 16px; background:none; color:var(--ink); cursor:pointer; margin-right:14px;}
   #menuToggle{display:none; flex-direction:column; gap:5px; cursor:pointer; background:none; border:none; padding:6px;}
   #menuToggle span{width:22px; height:1.5px; background:var(--ink); display:block;}
 
@@ -112,8 +129,48 @@
   .scrollcue .bar i{position:absolute; top:0; left:0; width:100%; height:40%; background:var(--ink); animation:scrolldrop 2.2s ease-in-out infinite;}
   @keyframes scrolldrop{0%{transform:translateY(-100%);}100%{transform:translateY(250%);}}
 
+  /* ===== media placeholders (interactive, scroll-parallax) ===== */
+  .media-frame{
+    position:relative; overflow:hidden; aspect-ratio:16/9; border-radius:2px;
+    background:linear-gradient(135deg, var(--deep) 0%, #2A2560 45%, var(--signal) 100%);
+    background-size:180% 180%; animation:mediaPan 14s ease-in-out infinite alternate;
+    cursor:pointer;
+  }
+  .media-frame.tall{aspect-ratio:4/3;}
+  @keyframes mediaPan{0%{background-position:0% 30%;}100%{background-position:100% 70%;}}
+  .media-frame-inner{position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:18px; transition:transform .2s ease-out;}
+  .media-play{
+    width:64px; height:64px; border-radius:50%; border:1px solid rgba(241,238,230,0.5);
+    display:flex; align-items:center; justify-content:center; color:var(--paper); font-size:16px;
+    transition:transform .35s cubic-bezier(.16,.84,.44,1), background .35s ease;
+  }
+  .media-frame:hover .media-play{transform:scale(1.12); background:rgba(241,238,230,0.12);}
+  .media-label{font-family:var(--mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:rgba(241,238,230,0.85);}
+  .media-frame:hover{transform:scale(1.01);}
+  .media-frame{transition:transform .5s cubic-bezier(.16,.84,.44,1);}
+
+  /* ===== trusted-by marquee ===== */
+  #trustedby{padding:70px 0;}
+  #trustedby .eyebrow{margin-bottom:34px;}
+  .marquee{overflow:hidden; -webkit-mask-image:linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); mask-image:linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);}
+  .marquee-track{display:flex; gap:64px; width:max-content; animation:marqueeScroll 26s linear infinite;}
+  .marquee-track span{font-family:var(--serif); font-size:22px; font-weight:500; color:var(--muted); white-space:nowrap;}
+  @keyframes marqueeScroll{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+
+  /* ===== funnel graphic ===== */
+  .funnel{display:flex; align-items:center; flex-wrap:wrap; gap:0; margin-top:70px;}
+  .funnel-step{display:flex; flex-direction:column; gap:8px; padding:20px 26px; border:1px solid var(--line); border-radius:100px; min-width:120px;}
+  .funnel-step.highlight{border-color:var(--signal); background:var(--signal-soft);}
+  .funnel-step .fn{font-family:var(--mono); font-size:11px; color:var(--signal);}
+  .funnel-step .fl{font-family:var(--serif); font-size:19px; font-weight:500;}
+  .funnel-arrow{padding:0 14px; color:var(--line-strong); font-size:18px;}
+  @media (max-width:860px){
+    .funnel{flex-direction:column; align-items:flex-start; gap:14px;}
+    .funnel-arrow{transform:rotate(90deg); padding:0 0 0 34px;}
+  }
+
   /* ===== SECTION 2 problem ===== */
-  #problem{background:var(--ink); color:var(--paper);}
+  #problem{background:var(--deep); color:var(--deep-text);}
   #problem .eyebrow{color:#8B94FF;}
   #problem h2{font-size:clamp(32px,4.4vw,52px); max-width:820px; margin-bottom:64px;}
   .problem-list{display:flex; flex-direction:column;}
@@ -188,7 +245,7 @@
   .ind-line{font-size:14px; color:var(--muted); margin-top:10px; max-width:240px; transition:color .35s ease;}
 
   /* ===== SECTION 7 process ===== */
-  #process{background:var(--ink); color:var(--paper); overflow:hidden;}
+  #process{background:var(--deep); color:var(--deep-text); overflow:hidden;}
   #process .eyebrow{color:#8B94FF;}
   #process h2{font-size:clamp(32px,4.6vw,58px); max-width:760px; margin-bottom:100px;}
   .proc-track{position:relative;}
@@ -196,7 +253,7 @@
   .proc-line-fill{position:absolute; top:26px; left:0; height:1px; background:#8B94FF; width:0%; transition:width 1.6s cubic-bezier(.16,.84,.44,1);}
   .proc-grid{display:grid; grid-template-columns:repeat(5,1fr); gap:20px; position:relative;}
   .proc-step{display:flex; flex-direction:column; gap:22px;}
-  .proc-dot{width:11px; height:11px; border-radius:50%; background:var(--paper); border:2px solid var(--ink); box-shadow:0 0 0 1px rgba(241,238,230,0.5); position:relative; z-index:2; transition:background .4s ease, transform .4s ease;}
+  .proc-dot{width:11px; height:11px; border-radius:50%; background:var(--deep-text); border:2px solid var(--deep); box-shadow:0 0 0 1px rgba(241,238,230,0.5); position:relative; z-index:2; transition:background .4s ease, transform .4s ease;}
   .proc-step.in .proc-dot{background:#8B94FF; transform:scale(1.15);}
   .proc-step h3{font-size:20px; font-weight:600;}
   .proc-step p{font-size:14px; color:#B7B2A5; line-height:1.55;}
@@ -265,11 +322,12 @@
     <a href="#contact" data-name="contact">Contact</a>
   </nav>
   <a href="#contact" class="navcta">Start a project</a>
+  <button id="themeToggle">Light</button>
   <button id="menuToggle" aria-label="Menu"><span></span><span></span><span></span></button>
 </header>
 
 <div class="hud">
-  <span>SECTION</span><span class="num" id="hudSection">01 / 08</span>
+  <span>REEL</span><span class="num" id="hudSection">01 / 08</span>
   <div class="track"><i id="hudTrack"></i></div>
 </div>
 
@@ -277,15 +335,40 @@
 <section id="home">
   <div class="hero-line" id="heroLineWrap"></div>
   <div class="wrap hero-inner">
-    <div class="eyebrow reveal in">Visual Growth Partner</div>
-    <h1 class="display reveal in">Think. Plan. Do.<br>Outside <em>the box.</em></h1>
-    <p class="hero-sub reveal in">Dixtro helps ambitious brands grow — through visual marketing, creative strategy, and world&#8209;class production. Not another video. A system for being seen, trusted, and remembered.</p>
+    <div class="eyebrow reveal in">Visual Marketing Company</div>
+    <h1 class="display reveal in">Visual marketing that makes brands <em>impossible to ignore.</em></h1>
+    <p class="hero-sub reveal in">We combine strategy, cinematic storytelling, design and content systems to help ambitious brands attract attention, build trust, and grow.</p>
     <div class="hero-actions reveal in">
       <a href="#contact" class="btn-primary">Start a conversation →</a>
       <a href="#about" class="btn-ghost">See how we think</a>
     </div>
   </div>
   <div class="scrollcue"><span>Scroll</span><div class="bar"><i></i></div></div>
+</section>
+
+<!-- ============ SHOWREEL ============ -->
+<section id="showreel" class="tight">
+  <div class="wrap">
+    <div class="media-frame reveal" data-parallax>
+      <div class="media-frame-inner">
+        <span class="media-play">▶</span>
+        <span class="media-label">Selected Work — Reel</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TRUSTED BY ============ -->
+<section id="trustedby">
+  <div class="wrap">
+    <div class="eyebrow reveal">Trusted By</div>
+    <div class="marquee reveal">
+      <div class="marquee-track">
+        <span>Meridian Bank</span><span>Nova Health</span><span>Atlas Developments</span><span>Ferro Systems</span>
+        <span>Meridian Bank</span><span>Nova Health</span><span>Atlas Developments</span><span>Ferro Systems</span>
+      </div>
+    </div>
+  </div>
 </section>
 
 <!-- ============ PROBLEM ============ -->
@@ -313,39 +396,21 @@
 <section id="about">
   <div class="wrap">
     <div class="eyebrow reveal">The Category</div>
-    <h2 class="reveal">What is a Visual Growth Partner?</h2>
-    <p class="about-lede reveal">A production company starts with a brief and ends with a deliverable. A marketing agency starts with a campaign and ends with a report. Dixtro starts with a business objective — and ends with growth you can measure in attention, trust, and demand.</p>
+    <h2 class="reveal">What is Visual Marketing?</h2>
+    <p class="about-lede reveal">Film. Photography. Design. Content systems. Different tools, one machine — built to turn attention into growth.</p>
 
-    <div class="compare reveal">
-      <div class="compare-head">
-        <div class="a">Production Company</div>
-        <div class="b">Dixtro</div>
-      </div>
-      <div class="compare-row">
-        <div class="a">Creates videos</div>
-        <div class="b">Builds visual marketing systems</div>
-      </div>
-      <div class="compare-row">
-        <div class="a">Starts with a production brief</div>
-        <div class="b">Starts with business objectives</div>
-      </div>
-      <div class="compare-row">
-        <div class="a">Focuses on execution</div>
-        <div class="b">Combines strategy, marketing, and execution</div>
-      </div>
-      <div class="compare-row">
-        <div class="a">Delivers one project</div>
-        <div class="b">Builds long-term content ecosystems</div>
-      </div>
-      <div class="compare-row">
-        <div class="a">Measures completion</div>
-        <div class="b">Measures business impact</div>
-      </div>
-      <div class="compare-row">
-        <div class="a">Vendor relationship</div>
-        <div class="b">Strategic growth partner</div>
-      </div>
+    <div class="funnel reveal">
+      <div class="funnel-step"><span class="fn">01</span><span class="fl">Attention</span></div>
+      <div class="funnel-arrow">→</div>
+      <div class="funnel-step"><span class="fn">02</span><span class="fl">Interest</span></div>
+      <div class="funnel-arrow">→</div>
+      <div class="funnel-step"><span class="fn">03</span><span class="fl">Trust</span></div>
+      <div class="funnel-arrow">→</div>
+      <div class="funnel-step"><span class="fn">04</span><span class="fl">Desire</span></div>
+      <div class="funnel-arrow">→</div>
+      <div class="funnel-step highlight"><span class="fn">05</span><span class="fl">Growth</span></div>
     </div>
+    <p class="about-lede reveal" style="margin-top:30px; font-size:15px;">Dixtro sits across every stage — the visual thread connecting attention to growth.</p>
   </div>
 </section>
 
@@ -353,67 +418,55 @@
 <section id="services">
   <div class="wrap">
     <div class="eyebrow reveal">What We Build</div>
-    <h2 class="reveal">Five outcomes. One system.</h2>
-    <p class="about-lede reveal" style="margin-bottom:60px;">We don't ask what video you need. We ask what business problem we're solving — then build toward one of five measurable outcomes.</p>
+    <h2 class="reveal">We help brands.</h2>
+    <p class="about-lede reveal" style="margin-bottom:60px; font-size:16px;">Nobody buys photography, video or animation. They buy what those things do.</p>
 
     <div id="outcomeList">
       <div class="outcome" data-n="01">
         <div class="outcome-head">
-          <h3><span class="n">01</span> Awareness</h3>
+          <h3><span class="n">01</span> Launch</h3>
           <svg class="outcome-spark" viewBox="0 0 130 36"><path d="M2,30 L20,26 L40,28 L58,18 L76,20 L94,8 L112,10 L128,3"/></svg>
           <span class="outcome-plus"></span>
         </div>
         <div class="outcome-body"><div class="outcome-body-inner">
-          <p>Being seen by the people who matter to your business — before they ever search for you.</p>
-          <div class="tag-row"><span class="tag">Brand Films</span><span class="tag">Campaign Strategy</span><span class="tag">Social Content Systems</span></div>
+          <p>Campaign films and launch strategy built to make noise on day one.</p>
+          <div class="tag-row"><span class="tag">Campaign Films</span><span class="tag">Launch Strategy</span><span class="tag">Product Launch Campaigns</span></div>
         </div></div>
       </div>
 
       <div class="outcome" data-n="02">
         <div class="outcome-head">
-          <h3><span class="n">02</span> Perception</h3>
+          <h3><span class="n">02</span> Grow</h3>
           <svg class="outcome-spark" viewBox="0 0 130 36"><path d="M2,10 L20,16 L40,12 L58,24 L76,14 L94,22 L112,9 L128,14"/></svg>
           <span class="outcome-plus"></span>
         </div>
         <div class="outcome-body"><div class="outcome-body-inner">
-          <p>Shaping how a brand is understood — its tone, its credibility, its place in the room.</p>
-          <div class="tag-row"><span class="tag">Visual Identity</span><span class="tag">Art Direction</span><span class="tag">Brand Experience</span></div>
+          <p>Always-on content, social campaigns and photography that keep a brand visible between launches.</p>
+          <div class="tag-row"><span class="tag">Social Campaigns</span><span class="tag">Photography</span><span class="tag">Content Systems</span></div>
         </div></div>
       </div>
 
       <div class="outcome" data-n="03">
         <div class="outcome-head">
-          <h3><span class="n">03</span> Demand</h3>
+          <h3><span class="n">03</span> Sell</h3>
           <svg class="outcome-spark" viewBox="0 0 130 36"><path d="M2,32 L20,29 L40,22 L58,24 L76,14 L94,16 L112,6 L128,4"/></svg>
           <span class="outcome-plus"></span>
         </div>
         <div class="outcome-body"><div class="outcome-body-inner">
-          <p>Turning attention into pipeline — product launches and campaigns built to convert, not just impress.</p>
-          <div class="tag-row"><span class="tag">Product Launch Campaigns</span><span class="tag">Motion Graphics</span><span class="tag">Marketing Collateral</span></div>
+          <p>Commercials and performance creative built to turn attention into revenue.</p>
+          <div class="tag-row"><span class="tag">Commercials</span><span class="tag">Performance Creative</span><span class="tag">UGC</span></div>
         </div></div>
       </div>
 
       <div class="outcome" data-n="04">
         <div class="outcome-head">
-          <h3><span class="n">04</span> Trust</h3>
+          <h3><span class="n">04</span> Lead</h3>
           <svg class="outcome-spark" viewBox="0 0 130 36"><path d="M2,20 L20,18 L40,21 L58,15 L76,17 L94,11 L112,13 L128,7"/></svg>
           <span class="outcome-plus"></span>
         </div>
         <div class="outcome-body"><div class="outcome-body-inner">
-          <p>Consistency, told well and told often — the quiet compounding asset behind every long customer relationship.</p>
-          <div class="tag-row"><span class="tag">Documentary Production</span><span class="tag">Corporate Films</span><span class="tag">Employer Branding</span></div>
-        </div></div>
-      </div>
-
-      <div class="outcome" data-n="05">
-        <div class="outcome-head">
-          <h3><span class="n">05</span> Growth</h3>
-          <svg class="outcome-spark" viewBox="0 0 130 36"><path d="M2,33 L20,27 L40,29 L58,20 L76,12 L94,15 L112,5 L128,2"/></svg>
-          <span class="outcome-plus"></span>
-        </div>
-        <div class="outcome-body"><div class="outcome-body-inner">
-          <p>The compound outcome of the other four — an equity that keeps paying out long after a campaign ends.</p>
-          <div class="tag-row"><span class="tag">Content Systems</span><span class="tag">Creative Consulting</span><span class="tag">Digital Marketing Assets</span></div>
+          <p>Brand films and founder content that build authority, not just awareness.</p>
+          <div class="tag-row"><span class="tag">Brand Films</span><span class="tag">Thought Leadership</span><span class="tag">Founder Content</span></div>
         </div></div>
       </div>
     </div>
@@ -430,7 +483,7 @@
       <div class="work-card reveal">
         <span class="work-tag">Finance — Meridian Bank</span>
         <h3>Nobody trusted a five-year-old bank with a twenty-year decision.</h3>
-        <svg class="work-figure" viewBox="0 0 400 120"><path d="M0,100 C60,95 100,60 160,55 C220,50 260,20 400,10"/></svg>
+        <div class="media-frame tall" data-parallax><div class="media-frame-inner"><span class="media-play">▶</span><span class="media-label">Documentary Series</span></div></div>
         <div class="work-meta">
           <div class="line"><div class="label">Strategy</div><div class="val">Reframe the brand around long-term stewardship, not fintech speed — a documentary series over a single ad.</div></div>
           <div class="line"><div class="label">Outcome</div><div class="val">Retail account openings up, cost per acquisition down within two quarters.</div></div>
@@ -440,7 +493,7 @@
       <div class="work-card reveal">
         <span class="work-tag">Healthcare — Nova Health</span>
         <h3>Patients chose the nearest clinic. We made distance stop mattering.</h3>
-        <svg class="work-figure" viewBox="0 0 400 120"><path d="M0,105 C70,100 110,70 170,60 C230,50 280,25 400,15"/></svg>
+        <div class="media-frame tall" data-parallax><div class="media-frame-inner"><span class="media-play">▶</span><span class="media-label">Brand Film + Photography</span></div></div>
         <div class="work-meta">
           <div class="line"><div class="label">Strategy</div><div class="val">A perception campaign built on staff and patient storytelling, distributed as a content system — not a one-off film.</div></div>
           <div class="line"><div class="label">Outcome</div><div class="val">Referral bookings became the largest single acquisition channel.</div></div>
@@ -450,7 +503,7 @@
       <div class="work-card reveal">
         <span class="work-tag">Real Estate — Atlas Developments</span>
         <h3>A launch date, no waitlist, and a market that had stopped paying attention.</h3>
-        <svg class="work-figure" viewBox="0 0 400 120"><path d="M0,100 C50,98 90,80 150,65 C220,48 260,18 400,8"/></svg>
+        <div class="media-frame tall" data-parallax><div class="media-frame-inner"><span class="media-play">▶</span><span class="media-label">Campaign Film + Site</span></div></div>
         <div class="work-meta">
           <div class="line"><div class="label">Strategy</div><div class="val">Demand engineered before construction — campaign, photography and site experience sequenced as one launch system.</div></div>
           <div class="line"><div class="label">Outcome</div><div class="val">Unit reservations closed ahead of the physical show suite opening.</div></div>
@@ -460,7 +513,7 @@
       <div class="work-card reveal">
         <span class="work-tag">Technology — Ferro Systems</span>
         <h3>Great product. Nobody outside engineering could explain what it did.</h3>
-        <svg class="work-figure" viewBox="0 0 400 120"><path d="M0,102 C60,96 100,70 160,58 C220,46 270,22 400,6"/></svg>
+        <div class="media-frame tall" data-parallax><div class="media-frame-inner"><span class="media-play">▶</span><span class="media-label">Founder + Culture Film</span></div></div>
         <div class="work-meta">
           <div class="line"><div class="label">Strategy</div><div class="val">A single visual language for product, sales, and careers — one brand doing three jobs at once.</div></div>
           <div class="line"><div class="label">Outcome</div><div class="val">Inbound enterprise inquiries and qualified candidate applications both increased.</div></div>
@@ -565,6 +618,15 @@
 
 <script>
 (function(){
+  // theme: default to dark, toggle back to light on request (session only, no storage)
+  document.documentElement.setAttribute('data-theme', 'dark');
+  const themeBtn = document.getElementById('themeToggle');
+  themeBtn.addEventListener('click', ()=>{
+    const isDark = document.documentElement.getAttribute('data-theme')==='dark';
+    document.documentElement.setAttribute('data-theme', isDark? 'light':'dark');
+    themeBtn.textContent = isDark ? 'Dark' : 'Light';
+  });
+
   // ---- mobile nav ----
   const menuToggle = document.getElementById('menuToggle');
   const navLinks = document.getElementById('navLinks');
@@ -677,6 +739,20 @@
   buildHeroLine();
   let resizeT;
   window.addEventListener('resize', ()=>{ clearTimeout(resizeT); resizeT = setTimeout(buildHeroLine, 200); });
+
+  // ---- media placeholder parallax ----
+  const parallaxEls = document.querySelectorAll('[data-parallax]');
+  function updateParallax(){
+    const vh = window.innerHeight;
+    parallaxEls.forEach(el=>{
+      const rect = el.getBoundingClientRect();
+      const progress = (rect.top + rect.height/2 - vh/2) / vh;
+      const inner = el.querySelector('.media-frame-inner');
+      if(inner) inner.style.transform = `translateY(${progress * 24}px)`;
+    });
+  }
+  document.addEventListener('scroll', updateParallax, {passive:true});
+  updateParallax();
 })();
 </script>
 </body>
