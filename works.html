@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Work — Dixtro</title>
+<meta name="description" content="Music videos, visualisers, documentaries, commercials, event coverage, product photography and design work from Dixtro.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F1EEE6; --paper-2:#E7E2D6; --paper-rgb:241,238,230;
+    --ink:#15130F; --ink-soft:#3A362C;
+    --signal:#3341E8; --signal-soft:rgba(51,65,232,0.10);
+    --muted:#79735F; --line:rgba(21,19,15,0.14); --line-strong:rgba(21,19,15,0.28);
+    --deep:#15130F; --deep-text:#F1EEE6;
+    --serif:'Space Grotesk',sans-serif; --body:'Inter',sans-serif; --mono:'IBM Plex Mono',monospace;
+    --maxw:1280px;
+  }
+  html[data-theme="dark"]{
+    --paper:#131015; --paper-2:#1C1820; --paper-rgb:19,16,21;
+    --ink:#F1EEE6; --ink-soft:#CDC7B9;
+    --signal:#6E78FF; --signal-soft:rgba(110,120,255,0.16);
+    --muted:#8D8879; --line:rgba(241,238,230,0.12); --line-strong:rgba(241,238,230,0.24);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--paper); color:var(--ink); font-family:var(--body); line-height:1.5; -webkit-font-smoothing:antialiased; transition:background .3s ease, color .3s ease;}
+  ::selection{background:var(--ink); color:var(--paper);}
+  a{color:inherit; text-decoration:none;} img{max-width:100%; display:block;}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 40px;}
+  h1,h2,h3{font-family:var(--serif); font-weight:600; letter-spacing:-0.02em;}
+  .eyebrow{font-family:var(--mono); font-size:12px; letter-spacing:.05em; text-transform:uppercase; color:var(--signal); display:flex; align-items:center; gap:10px; margin-bottom:24px;}
+  .eyebrow::before{content:''; width:22px; height:1px; background:var(--signal);}
+  .reveal{opacity:0; transform:translateY(24px); transition:opacity .8s cubic-bezier(.16,.84,.44,1), transform .8s cubic-bezier(.16,.84,.44,1);}
+  .reveal.in{opacity:1; transform:none;}
+
+  header{position:fixed; top:0; left:0; right:0; z-index:900; display:flex; align-items:center; justify-content:space-between; padding:22px 40px; background:linear-gradient(to bottom, rgba(var(--paper-rgb),.92), rgba(var(--paper-rgb),0)); backdrop-filter:blur(2px);}
+  .logo{font-family:var(--serif); font-weight:700; font-size:20px; letter-spacing:-0.02em;}
+  .logo span{color:var(--signal);}
+  nav.links{display:flex; gap:26px; align-items:center;}
+  nav.links a{font-family:var(--mono); font-size:12px; letter-spacing:.02em; text-transform:uppercase; color:var(--ink-soft); position:relative; padding:4px 0;}
+  nav.links a::after{content:''; position:absolute; left:0; bottom:0; width:0; height:1px; background:var(--ink); transition:width .3s ease;}
+  nav.links a:hover::after, nav.links a.active::after{width:100%;}
+  nav.links a.active{color:var(--ink);}
+  .navcta{font-family:var(--mono); font-size:12px; text-transform:uppercase; letter-spacing:.02em; border:1px solid var(--ink); padding:9px 18px; border-radius:100px; transition:background .25s ease, color .25s ease;}
+  .navcta:hover{background:var(--ink); color:var(--paper);}
+  #themeToggle{font-family:var(--mono); font-size:11px; text-transform:uppercase; letter-spacing:.02em; border:1px solid var(--line-strong); border-radius:100px; padding:8px 16px; background:none; color:var(--ink); cursor:pointer; margin-right:14px;}
+  #menuToggle{display:none; flex-direction:column; gap:5px; cursor:pointer; background:none; border:none; padding:6px;}
+  #menuToggle span{width:22px; height:1.5px; background:var(--ink); display:block;}
+
+  .hud{position:fixed; left:40px; bottom:28px; z-index:850; font-family:var(--mono); font-size:12px; color:var(--muted); display:flex; align-items:center; gap:10px;}
+  .hud .num{color:var(--ink); font-weight:500;}
+  .hud .track{width:80px; height:1px; background:var(--line-strong); position:relative;}
+  .hud .track i{position:absolute; left:0; top:0; height:100%; background:var(--signal); width:0%;}
+
+  #whero{padding:190px 0 60px;}
+  #whero h1{font-size:clamp(34px,5.4vw,68px); max-width:820px; line-height:1.05;}
+  #whero p{margin-top:22px; max-width:520px; font-size:17px; color:var(--muted); line-height:1.6;}
+
+  .filter-rail{position:sticky; top:78px; z-index:600; background:rgba(var(--paper-rgb),.94); backdrop-filter:blur(6px); padding:16px 0; border-bottom:1px solid var(--line); margin-top:50px; margin-bottom:10px;}
+  .filter-row{display:flex; gap:10px; flex-wrap:wrap;}
+  .filter-btn{font-family:var(--mono); font-size:12px; text-transform:uppercase; letter-spacing:.02em; border:1px solid var(--line-strong); border-radius:100px; padding:9px 16px; background:none; color:var(--ink-soft); cursor:pointer; transition:all .25s ease;}
+  .filter-btn.active{background:var(--ink); color:var(--paper); border-color:var(--ink);}
+
+  #archive{padding:60px 0 140px;}
+  .plate-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:2px; background:var(--line); border:1px solid var(--line);}
+  .plate{background:var(--paper); padding:0; display:flex; flex-direction:column; transition:opacity .35s ease, transform .35s ease; cursor:pointer;}
+  .plate.hide{opacity:0; transform:scale(.94);}
+
+  .media-frame{position:relative; overflow:hidden; aspect-ratio:4/3; background:linear-gradient(135deg, var(--deep) 0%, #2A2560 45%, var(--signal) 100%); background-size:180% 180%; animation:mediaPan 16s ease-in-out infinite alternate;}
+  @keyframes mediaPan{0%{background-position:0% 30%;}100%{background-position:100% 70%;}}
+  .media-frame-inner{position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px; transition:transform .2s ease-out;}
+  .media-play{width:48px; height:48px; border-radius:50%; border:1px solid rgba(241,238,230,0.5); display:flex; align-items:center; justify-content:center; color:var(--paper); font-size:14px; transition:transform .35s cubic-bezier(.16,.84,.44,1), background .35s ease;}
+  .plate:hover .media-play{transform:scale(1.12); background:rgba(241,238,230,0.12);}
+  .plate:hover .media-frame{transform:scale(1.015);}
+  .media-frame{transition:transform .5s cubic-bezier(.16,.84,.44,1);}
+  .media-label{font-family:var(--mono); font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:rgba(241,238,230,0.85);}
+
+  .plate-body{padding:24px 24px 26px; display:flex; flex-direction:column; flex:1;}
+  .plate-top{display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;}
+  .plate-num{font-family:var(--mono); font-size:11px; color:var(--signal); letter-spacing:.04em;}
+  .plate-view{font-family:var(--mono); font-size:10.5px; text-transform:uppercase; letter-spacing:.04em; color:var(--muted); transition:color .25s ease;}
+  .plate:hover .plate-view{color:var(--signal);}
+  .plate h3{font-size:20px; font-weight:500; margin-bottom:8px;}
+  .plate-caption{color:var(--muted); font-size:14px; line-height:1.55;}
+  .plate-meta{display:flex; flex-wrap:wrap; gap:8px 14px; margin-top:16px; padding-top:14px; border-top:1px solid var(--line); font-family:var(--mono); font-size:10.5px; text-transform:uppercase; letter-spacing:.03em; color:var(--muted);}
+
+  #wcta{padding:40px 0 130px;}
+  #wcta h2{font-size:clamp(28px,4.4vw,46px); max-width:640px;}
+  #wcta p{margin-top:18px; max-width:460px; color:var(--muted); font-size:16px;}
+  .btn-primary{margin-top:34px; font-family:var(--mono); font-size:13px; text-transform:uppercase; letter-spacing:.02em; background:var(--ink); color:var(--paper); padding:16px 30px; border-radius:100px; display:inline-flex; align-items:center; gap:10px; transition:transform .3s cubic-bezier(.16,.84,.44,1), background .3s ease;}
+  .btn-primary:hover{transform:translateY(-2px); background:var(--signal);}
+
+  footer{border-top:1px solid var(--line); padding:50px 0;}
+  .foot-grid{display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:30px;}
+  .foot-taglines{font-family:var(--mono); font-size:12px; color:var(--muted); display:flex; flex-wrap:wrap; gap:10px 20px;}
+
+  .modal-overlay{position:fixed; inset:0; background:rgba(0,0,0,0.72); z-index:1000; display:flex; align-items:center; justify-content:center; padding:30px; opacity:0; pointer-events:none; transition:opacity .3s ease;}
+  .modal-overlay.open{opacity:1; pointer-events:auto;}
+  .modal-box{position:relative; background:var(--paper); max-width:960px; width:100%; max-height:88vh; overflow-y:auto; border-radius:4px; transform:translateY(16px); transition:transform .35s cubic-bezier(.16,.84,.44,1); display:grid; grid-template-columns:1.3fr 1fr;}
+  .modal-overlay.open .modal-box{transform:translateY(0);}
+  .modal-close{position:absolute; top:18px; right:18px; width:36px; height:36px; border-radius:50%; border:1px solid rgba(241,238,230,0.4); background:rgba(0,0,0,0.3); color:#F1EEE6; font-size:18px; cursor:pointer; z-index:5;}
+  .modal-media{position:relative; background:var(--deep); min-height:320px; display:flex; align-items:center; justify-content:center; overflow:hidden;}
+  .modal-media-frame{width:100%; height:100%; min-height:320px; position:relative; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg, var(--deep) 0%, #2A2560 45%, var(--signal) 100%);}
+  .modal-media-frame img, .modal-media-frame video, .modal-media-frame iframe{width:100%; height:100%; object-fit:cover; border:none; position:absolute; inset:0;}
+  .modal-placeholder-note{position:relative; z-index:2; text-align:center; padding:20px; color:rgba(241,238,230,0.9);}
+  .modal-placeholder-note .mp-icon{width:52px; height:52px; border-radius:50%; border:1px solid rgba(241,238,230,0.5); display:flex; align-items:center; justify-content:center; margin:0 auto 14px; font-size:15px;}
+  .modal-placeholder-note .mp-label{font-family:var(--mono); font-size:11px; text-transform:uppercase; letter-spacing:.05em;}
+  .modal-nav{position:absolute; top:50%; transform:translateY(-50%); width:36px; height:36px; border-radius:50%; background:rgba(0,0,0,0.35); border:1px solid rgba(241,238,230,0.3); color:#F1EEE6; font-size:16px; cursor:pointer; z-index:4; display:flex; align-items:center; justify-content:center;}
+  .modal-nav.prev{left:14px;} .modal-nav.next{right:14px;}
+  .modal-dots{position:absolute; bottom:14px; left:0; right:0; display:flex; justify-content:center; gap:6px; z-index:4;}
+  .modal-dots span{width:6px; height:6px; border-radius:50%; background:rgba(241,238,230,0.4); transition:background .2s ease;}
+  .modal-dots span.active{background:#F1EEE6;}
+  .modal-info{padding:36px 34px; display:flex; flex-direction:column;}
+  .modal-info .cat{font-family:var(--mono); font-size:11.5px; text-transform:uppercase; letter-spacing:.05em; color:var(--signal); margin-bottom:14px;}
+  .modal-info h3{font-size:26px; margin-bottom:12px;}
+  .modal-info p{font-size:14.5px; color:var(--ink-soft); line-height:1.65; margin-bottom:22px;}
+  .modal-meta-list{display:flex; flex-direction:column; gap:12px; padding-top:18px; border-top:1px solid var(--line);}
+  .modal-meta-list div{display:flex; justify-content:space-between; font-family:var(--mono); font-size:11.5px; text-transform:uppercase; letter-spacing:.02em;}
+  .modal-meta-list div span:first-child{color:var(--muted);}
+  .modal-meta-list div span:last-child{color:var(--ink); text-align:right;}
+
+  @media (max-width:960px){
+    .plate-grid{grid-template-columns:repeat(2,1fr);}
+    .modal-box{grid-template-columns:1fr; max-height:92vh;}
+  }
+  @media (max-width:700px){
+    .wrap{padding:0 22px;} header{padding:16px 22px;}
+    nav.links{position:fixed; top:0; right:0; height:100vh; width:78%; background:var(--paper); flex-direction:column; justify-content:center; align-items:flex-start; gap:24px; padding:36px; transform:translateX(100%); transition:transform .4s ease; z-index:950; border-left:1px solid var(--line);}
+    nav.links.open{transform:translateX(0);}
+    #menuToggle{display:flex;} .navcta{display:none;} .hud{display:none;}
+    .plate-grid{grid-template-columns:1fr;}
+    .filter-rail{top:64px;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important; transition:none !important;}
+    .reveal{opacity:1; transform:none;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Dixtro<span>.</span></div>
+  <nav class="links" id="navLinks">
+    <a href="dixtro-website.html#home">Home</a>
+    <a href="dixtro-website.html#about">About</a>
+    <a href="dixtro-website.html#services">Services</a>
+    <a href="works.html" class="active">Work</a>
+    <a href="dixtro-website.html#industries">Industries</a>
+    <a href="dixtro-website.html#process">Process</a>
+    <a href="dixtro-website.html#insights">Insights</a>
+    <a href="dixtro-website.html#contact">Contact</a>
+  </nav>
+  <button id="themeToggle">Light</button>
+  <a href="dixtro-website.html#contact" class="navcta">Start a project</a>
+  <button id="menuToggle" aria-label="Menu"><span></span><span></span><span></span></button>
+</header>
+
+<div class="hud"><span>PLATE</span><span class="num" id="hudPlate">01 / 16</span><div class="track"><i id="hudTrack"></i></div></div>
+
+<section id="whero">
+  <div class="wrap">
+    <div class="eyebrow reveal in">The Archive</div>
+    <h1 class="reveal in">Not everything we've made. Just what we'd make again.</h1>
+    <p class="reveal in">Music videos, documentaries, commercials, event coverage, product photography and design — click into any piece for the full story.</p>
+  </div>
+</section>
+
+<div class="filter-rail">
+  <div class="wrap">
+    <div class="filter-row" id="filterRow">
+      <button class="filter-btn active" data-filter="all">All Works</button>
+      <button class="filter-btn" data-filter="film">Film &amp; Video</button>
+      <button class="filter-btn" data-filter="events">Events</button>
+      <button class="filter-btn" data-filter="product">Product Photography</button>
+      <button class="filter-btn" data-filter="design">Design</button>
+      <button class="filter-btn" data-filter="podcast">Podcast</button>
+    </div>
+  </div>
+</div>
+
+<section id="archive">
+  <div class="wrap">
+    <div class="plate-grid" id="plateGrid"></div>
+  </div>
+</section>
+
+<section id="wcta">
+  <div class="wrap">
+    <div class="eyebrow reveal">Add Yours to the Archive</div>
+    <h2 class="reveal">If any of this looked like your brand, that wasn't an accident.</h2>
+    <p class="reveal">Tell us what you're building. We'll tell you what it should look like.</p>
+    <a href="dixtro-website.html#contact" class="btn-primary reveal">Start a conversation →</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="logo">Dixtro<span>.</span></div>
+      <div class="foot-taglines"><span>Build Attention.</span><span>Build Trust.</span><span>Build Growth.</span><span>Beyond Production.</span></div>
+    </div>
+  </div>
+</footer>
+
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-box">
+    <button class="modal-close" id="modalClose">&times;</button>
+    <div class="modal-media" id="modalMedia"></div>
+    <div class="modal-info">
+      <span class="cat" id="modalCat"></span>
+      <h3 id="modalTitle"></h3>
+      <p id="modalDesc"></p>
+      <div class="modal-meta-list" id="modalMetaList"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  document.documentElement.setAttribute('data-theme', 'dark');
+  const themeBtn = document.getElementById('themeToggle');
+  themeBtn.addEventListener('click', ()=>{
+    const isDark = document.documentElement.getAttribute('data-theme')==='dark';
+    document.documentElement.setAttribute('data-theme', isDark? 'light':'dark');
+    themeBtn.textContent = isDark ? 'Dark' : 'Light';
+  });
+
+  const menuToggle=document.getElementById('menuToggle'), navLinks=document.getElementById('navLinks');
+  menuToggle.addEventListener('click', ()=>navLinks.classList.toggle('open'));
+  navLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click', ()=>navLinks.classList.remove('open')));
+
+  /* =========================================================
+     PROJECT DATA
+     Every media slot below is set to 'placeholder' — that's
+     what renders the gradient preview frames.
+
+     TO GO LIVE:
+     - image / design projects -> images: ['URL1','URL2',...]
+       Cloudinary:   https://res.cloudinary.com/<cloud_name>/image/upload/<public_id>.jpg
+       Google Drive: https://drive.google.com/uc?export=view&id=<FILE_ID>
+     - video projects -> video: 'URL'
+       Cloudinary:   https://res.cloudinary.com/<cloud_name>/video/upload/<public_id>.mp4
+       Google Drive: https://drive.google.com/file/d/<FILE_ID>/preview
+     Nothing else needs to change — the modal detects the URL
+     type and renders the right player automatically.
+  ========================================================= */
+  const projects = [
+    { id:1, title:'A Single, Shot Around One Idea', cat:'film', format:'Music Video', role:'Direction & Edit', client:'Independent Release',
+      caption:'A single video built around one visual idea, not fifteen.',
+      desc:'We picked one strong visual concept and let the whole video sit inside it, instead of stacking scene after scene.',
+      type:'video', video:'placeholder' },
+    { id:2, title:'Visualiser, Built to Loop', cat:'film', format:'Visualiser', role:'Motion & Direction', client:'Independent Release',
+      caption:'Motion made to sit behind a track, not compete with it.',
+      desc:'Built to loop cleanly and hold attention on a streaming platform without pulling focus from the song itself.',
+      type:'video', video:'placeholder' },
+    { id:3, title:'Tour Promo, Before the Poster', cat:'film', format:'Concert Tour Promo', role:'Animation & Design', client:'Artist Tour Campaign',
+      caption:'An animated promo that announced tour dates before the poster did.',
+      desc:'Motion graphics built to travel across every platform at once — the kind of thing a poster alone couldn\'t do.',
+      type:'video', video:'placeholder' },
+    { id:4, title:'A Story Told Over Weeks', cat:'film', format:'Short Documentary', role:'Direction, Shooting & Edit', client:'',
+      caption:'A story told over weeks, not a single shoot day.',
+      desc:'We followed the subject long enough that the camera stopped being the reason they were talking.',
+      type:'video', video:'placeholder' },
+    { id:5, title:'One Message, Said Clearly', cat:'film', format:'Brand Commercial', role:'Direction & Production', client:'',
+      caption:'A commercial built around a single idea, said once, clearly.',
+      desc:'No stacking five messages into thirty seconds — we picked the one thing worth remembering and built around it.',
+      type:'video', video:'placeholder' },
+    { id:6, title:'Breet 3.0 — How-To Series', cat:'film', format:'Explainer Video Series', role:'Produced, Shot & Edited', client:'Breet',
+      caption:'A how-to series for Breet\'s 3.0 launch, made so people would actually finish watching.',
+      desc:'Instead of one long walkthrough, we broke the new features into a series short enough that nobody bounced halfway through.',
+      type:'video', video:'placeholder' },
+    { id:7, title:'The Big Birthday Party', cat:'events', format:'Event Retainer', role:'Ongoing Coverage', client:'The Big Birthday Party',
+      caption:'An ongoing retainer covering one of the city\'s biggest recurring nights.',
+      desc:'Same event, different night each time — we keep finding a new way to capture the room.',
+      type:'video', video:'placeholder' },
+    { id:8, title:'Adidas O Studios — Launch Night', cat:'events', format:'Event Highlight Film', role:'Shot & Edited', client:'Adidas O Studios',
+      caption:'The launch night, cut down to the moments worth remembering.',
+      desc:'We shot and edited the highlight reel from Adidas O Studios\' launch — built to move fast and still feel like being there.',
+      type:'video', video:'placeholder' },
+    { id:9, title:'Three Apps, One Design System', cat:'design', format:'Logo & App Design', role:'Brand & Product Design', client:'3 Apps — Live on Play Store',
+      caption:'Logos and interfaces for three apps now live on the Play Store.',
+      desc:'From the mark to the screens people actually tap through — designed as one system, not separate jobs.',
+      type:'design', images:['placeholder','placeholder','placeholder','placeholder'] },
+    { id:10, title:'Artist EPK Photography', cat:'design', format:'EPK Photography', role:'Photography', client:'',
+      caption:'Press kit images built for bookings, not just an Instagram grid.',
+      desc:'The kind of images a promoter or venue actually uses to say yes — not just ones that look nice.',
+      type:'image', images:['placeholder','placeholder','placeholder','placeholder'] },
+    { id:11, title:'Podcast Production', cat:'podcast', format:'Podcast Production', role:'Production, Shooting & Edit', client:'',
+      caption:'Full production — the audio, the visuals, and the clips that get cut from it after.',
+      desc:'We treat the recording as raw material for more than one episode — the clips usually outlive the full-length upload.',
+      type:'video', video:'placeholder' },
+    { id:12, title:'Misspay — Product Photography', cat:'product', format:'Product Photography', role:'Photography', client:'Misspay',
+      caption:'Shoe photography that made the product the whole conversation.',
+      desc:'Lit and shot to carry a feed and a campaign on its own, without needing a model in every frame.',
+      type:'image', images:['placeholder','placeholder','placeholder','placeholder'] },
+    { id:13, title:'Wings Bistro — Campaign Photography', cat:'product', format:'Product Photography', role:'Photography', client:'Wings Bistro',
+      caption:'Food photographed to make people hungry mid-scroll.',
+      desc:'Shot for the social feed first — fast, appetising, built to stop a thumb.',
+      type:'image', images:['placeholder','placeholder','placeholder'] },
+    { id:14, title:'City Sub — Campaign Photography', cat:'product', format:'Product Photography', role:'Photography', client:'City Sub',
+      caption:'Sandwiches shot like the main event, not a menu filler.',
+      desc:'Built for social and in-store use from the same shoot day.',
+      type:'image', images:['placeholder','placeholder','placeholder'] },
+    { id:15, title:'Spicy Corner — Campaign Photography', cat:'product', format:'Product Photography', role:'Photography', client:'Spicy Corner',
+      caption:'Heat and steam, photographed so you could almost smell it.',
+      desc:'Shot to carry a marketing campaign across social and print at once.',
+      type:'image', images:['placeholder','placeholder','placeholder'] },
+    { id:16, title:'Papa\'s Grill — Campaign Photography', cat:'product', format:'Product Photography', role:'Photography', client:'Papa\'s Grill',
+      caption:'Grill photography built for a campaign, not just a menu board.',
+      desc:'Consistent enough to run as a series across every platform the brand uses.',
+      type:'image', images:['placeholder','placeholder','placeholder'] }
+  ];
+
+  const grid = document.getElementById('plateGrid');
+  projects.forEach((p, i)=>{
+    const el = document.createElement('article');
+    el.className = 'plate reveal in';
+    el.dataset.cat = p.cat;
+    el.dataset.id = p.id;
+    const icon = p.type==='video' ? '&#9654;' : '&#9675;';
+    el.innerHTML = `
+      <div class="media-frame"><div class="media-frame-inner"><span class="media-play">${icon}</span><span class="media-label">${p.format}</span></div></div>
+      <div class="plate-body">
+        <div class="plate-top"><span class="plate-num">Plate ${String(i+1).padStart(2,'0')}</span><span class="plate-view">View →</span></div>
+        <h3>${p.title}</h3>
+        <p class="plate-caption">${p.caption}</p>
+        <div class="plate-meta"><span>${p.format}</span>${p.client ? `<span>${p.client}</span>` : ''}</div>
+      </div>`;
+    el.addEventListener('click', ()=>openModal(p.id));
+    grid.appendChild(el);
+  });
+
+  const io = new IntersectionObserver((es)=>es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} }), {threshold:.15});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  filterBtns.forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      filterBtns.forEach(b=>b.classList.toggle('active', b===btn));
+      const filter = btn.dataset.filter;
+      document.querySelectorAll('.plate').forEach(p=>{
+        const match = filter==='all' || p.dataset.cat===filter;
+        if(match){
+          p.style.display='';
+          requestAnimationFrame(()=>p.classList.remove('hide'));
+        } else {
+          p.classList.add('hide');
+          setTimeout(()=>{ if(p.classList.contains('hide')) p.style.display='none'; }, 350);
+        }
+      });
+    });
+  });
+
+  const hudPlate = document.getElementById('hudPlate');
+  const hudTrack = document.getElementById('hudTrack');
+  (function wirePlateObserver(){
+    const plates = document.querySelectorAll('.plate');
+    const total = plates.length;
+    const plateObserver = new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          const idx = Array.from(plates).indexOf(entry.target);
+          if(idx>-1){
+            hudPlate.textContent = String(idx+1).padStart(2,'0') + ' / ' + String(total).padStart(2,'0');
+            hudTrack.style.width = (((idx+1)/total)*100) + '%';
+          }
+        }
+      });
+    }, {threshold:0.5});
+    plates.forEach(p=>plateObserver.observe(p));
+  })();
+
+  const overlay = document.getElementById('modalOverlay');
+  const modalMedia = document.getElementById('modalMedia');
+  const modalCat = document.getElementById('modalCat');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalDesc = document.getElementById('modalDesc');
+  const modalMetaList = document.getElementById('modalMetaList');
+  let galleryIndex = 0;
+
+  function isPlaceholder(url){ return !url || url === 'placeholder'; }
+  function driveIdFromUrl(url){
+    const m = url.match(/\/d\/([^/]+)/) || url.match(/[?&]id=([^&]+)/);
+    return m ? m[1] : null;
+  }
+  function renderMediaFrame(url, kind){
+    if(isPlaceholder(url)){
+      return `<div class="modal-media-frame"><div class="modal-placeholder-note">
+        <div class="mp-icon">${kind==='video' ? '&#9654;' : '&#9675;'}</div>
+        <div class="mp-label">Connect Cloudinary or Drive to preview this ${kind}</div>
+      </div></div>`;
+    }
+    if(kind==='video'){
+      if(url.includes('drive.google.com')){
+        const id = driveIdFromUrl(url);
+        const src = id ? `https://drive.google.com/file/d/${id}/preview` : url;
+        return `<div class="modal-media-frame"><iframe src="${src}" allow="autoplay"></iframe></div>`;
+      }
+      return `<div class="modal-media-frame"><video controls src="${url}"></video></div>`;
+    }
+    if(url.includes('drive.google.com')){
+      const id = driveIdFromUrl(url);
+      const src = id ? `https://drive.google.com/uc?export=view&id=${id}` : url;
+      return `<div class="modal-media-frame"><img src="${src}" alt=""></div>`;
+    }
+    return `<div class="modal-media-frame"><img src="${url}" alt=""></div>`;
+  }
+  function renderGallery(p){
+    const imgs = p.images || ['placeholder'];
+    let dots = imgs.map((_,i)=>`<span class="${i===galleryIndex?'active':''}"></span>`).join('');
+    modalMedia.innerHTML = renderMediaFrame(imgs[galleryIndex], 'image') +
+      (imgs.length>1 ? `<button class="modal-nav prev" id="galPrev">&#8249;</button><button class="modal-nav next" id="galNext">&#8250;</button><div class="modal-dots">${dots}</div>` : '');
+    if(imgs.length>1){
+      document.getElementById('galPrev').addEventListener('click', (e)=>{ e.stopPropagation(); galleryIndex = (galleryIndex - 1 + imgs.length) % imgs.length; renderGallery(p); });
+      document.getElementById('galNext').addEventListener('click', (e)=>{ e.stopPropagation(); galleryIndex = (galleryIndex + 1) % imgs.length; renderGallery(p); });
+    }
+  }
+  function openModal(id){
+    const p = projects.find(x=>x.id===id);
+    if(!p) return;
+    galleryIndex = 0;
+    modalCat.textContent = p.format;
+    modalTitle.textContent = p.title;
+    modalDesc.textContent = p.desc;
+    if(p.type==='video'){
+      modalMedia.innerHTML = renderMediaFrame(p.video, 'video');
+    } else {
+      renderGallery(p);
+    }
+    let metaHtml = `<div><span>Format</span><span>${p.format}</span></div>`;
+    if(p.role) metaHtml += `<div><span>Role</span><span>${p.role}</span></div>`;
+    if(p.client) metaHtml += `<div><span>Client</span><span>${p.client}</span></div>`;
+    modalMetaList.innerHTML = metaHtml;
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(){
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.getElementById('modalClose').addEventListener('click', closeModal);
+  overlay.addEventListener('click', (e)=>{ if(e.target === overlay) closeModal(); });
+  document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeModal(); });
+})();
+</script>
+</body>
+</html>
